@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   data: [],
-  isLoading:false,
+  isLoading: false,
   error: null,
 };
 
@@ -13,12 +13,10 @@ export const getAllReviews = createAsyncThunk(
   "/getAllReviews",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/review/${productId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/review/${productId}`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -33,7 +31,6 @@ export const createReview = createAsyncThunk(
     try {
       const response = await axios.post("${BASE_URL}/review", reviewData, {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       });
       console.log(response);
       return response.data;
@@ -50,12 +47,10 @@ export const deleteReview = createAsyncThunk(
   "deleteReview",
   async ({ reviewId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/review/${reviewId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.delete(`${BASE_URL}/review/${reviewId}`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );

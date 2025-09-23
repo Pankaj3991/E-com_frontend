@@ -3,74 +3,81 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
-  currentuser:{},
+  currentuser: {},
   data: [],
-  isLoading:false,
+  isLoading: false,
   error: null,
 };
 
 export const RegisterUser = createAsyncThunk(
   "/register",
-  async (formDatas, {rejectWithValue}) => {
+  async (formDatas, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/register`, formDatas, {
         headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
       });
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
 export const LoginUser = createAsyncThunk(
   "/login",
-  async (loginData, {rejectWithValue}) => {
+  async (loginData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/login`, loginData, {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true,
       });
       return response.data;
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
-export const Logout = createAsyncThunk("/logout", async (_, {rejectWithValue}) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/logout`, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const Logout = createAsyncThunk(
+  "/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/logout`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
 export const currentUser = createAsyncThunk(
   "/currentUser",
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/me`, { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/me`);
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
 export const updatePassword = createAsyncThunk(
   "/updatePassword",
-  async (passwordData,{rejectWithValue}) => {
+  async (passwordData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${BASE_URL}/password/update`,
@@ -79,97 +86,102 @@ export const updatePassword = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         }
       );
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
 export const updateProfile = createAsyncThunk(
   "/updateProfile",
-  async ({formData}, {rejectWithValue}) => {
+  async ({ formData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(`${BASE_URL}/me/update`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        withCredentials: true,
       });
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
-export const allUsers = createAsyncThunk("/allUsers", async ({setusers}, {rejectWithValue}) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/admin/users`, {
-      withCredentials: true,
-    });
-    setusers(response.data.users);
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const allUsers = createAsyncThunk(
+  "/allUsers",
+  async ({ setusers }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/admin/users`);
+      setusers(response.data.users);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
 export const singleUser = createAsyncThunk(
   "/singleUser",
-  async (userId,{rejectWithValue}) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/user/${userId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/admin/user/${userId}`);
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
-
 export const updateRole = createAsyncThunk(
   "/updateRole",
-  async ({ newRole, userId },{rejectWithValue}) => {
+  async ({ newRole, userId }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${BASE_URL}/admin/user/${userId}`,
-        {role:newRole},
+        { role: newRole },
         {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         }
       );
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
 
 export const deleteUser = createAsyncThunk(
   "/deleteUser",
-  async ({userId}, {rejectWithValue}) => {
+  async ({ userId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/admin/user/${userId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.delete(`${BASE_URL}/admin/user/${userId}`);
       return response.data;
     } catch (error) {
-      console.log(error)
-      return rejectWithValue(error.response ? error.response.data.message : error.message);
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
     }
   }
 );
@@ -179,7 +191,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     // if any funtion -- code here & export that
-    clearError:(state) => {
+    clearError: (state) => {
       state.error = null;
     },
   },
@@ -198,7 +210,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(LoginUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -211,7 +223,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(Logout.pending, (state) => {
         state.isLoading = true;
       })
@@ -224,7 +236,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(currentUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -238,7 +250,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(updatePassword.pending, (state) => {
         state.isLoading = true;
       })
@@ -250,7 +262,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(updateProfile.pending, (state) => {
         state.isLoading = true;
       })
@@ -263,7 +275,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(allUsers.pending, (state) => {
         state.isLoading = true;
       })
@@ -275,7 +287,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(singleUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -287,7 +299,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(updateRole.pending, (state) => {
         state.isLoading = true;
       })
@@ -299,7 +311,7 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      builder
+    builder
       .addCase(deleteUser.pending, (state) => {
         state.isLoading = true;
       })

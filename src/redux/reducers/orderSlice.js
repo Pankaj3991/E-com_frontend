@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -17,12 +17,11 @@ export const placeOrder = createAsyncThunk(
         { orderItem, shippingInfo },
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -35,14 +34,11 @@ export const cancelOrder = createAsyncThunk(
   async ({ orderId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${BASE_URL}order/cancelOrder/${orderId}`,
-        {
-          withCredentials: true,
-        }
+        `${BASE_URL}order/cancelOrder/${orderId}`
       );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -59,12 +55,11 @@ export const updateStatus = createAsyncThunk(
         { orderStatus },
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -74,14 +69,12 @@ export const updateStatus = createAsyncThunk(
 
 export const getOrders = createAsyncThunk(
   "/order/getOrders",
-  async ( _, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/order/getOrders`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/order/getOrders`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -93,12 +86,10 @@ export const supplierOrders = createAsyncThunk(
   "/order/supplierOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/order/supplierOrders`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/order/supplierOrders`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -171,7 +162,6 @@ const orderSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-
   },
 });
 

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-
 const initialState = {
   data: [],
   isLoading: false,
@@ -13,13 +12,16 @@ export const addItem = createAsyncThunk(
   "/addItem",
   async ({ productData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${BASE_URL}/cart/addItem`, productData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const response = await axios.put(
+        `${BASE_URL}/cart/addItem`,
+        productData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -31,12 +33,12 @@ export const removeItem = createAsyncThunk(
   "/removeItem",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${BASE_URL}/cart/removeItem/${productId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.put(
+        `${BASE_URL}/cart/removeItem/${productId}`
+      );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -48,12 +50,10 @@ export const cartDetail = createAsyncThunk(
   "/cartDetail",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/cart`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/cart`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -70,7 +70,7 @@ const cartSlice = createSlice({
       state.error = null;
     },
   },
-  extraReducers: (builder) => {      
+  extraReducers: (builder) => {
     builder
       .addCase(removeItem.pending, (state) => {
         state.isLoading = true;
@@ -82,7 +82,7 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-      
+
     builder
       .addCase(cartDetail.pending, (state) => {
         state.isLoading = true;

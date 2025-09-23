@@ -4,23 +4,18 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   data: [],
-  isLoading:false,
+  isLoading: false,
   error: null,
 };
 
 export const getAllCategories = createAsyncThunk(
   "/getAllCategories",
-  async (
-    _,
-    { rejectWithValue }
-  ) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/category`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${BASE_URL}/admin/category`);
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -39,12 +34,11 @@ export const createCategory = createAsyncThunk(
         categoryData,
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -56,12 +50,12 @@ export const categoryDetail = createAsyncThunk(
   "/categoryDetail",
   async ({ categoryId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/category/${categoryId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${BASE_URL}/admin/category/${categoryId}`
+      );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );
@@ -74,14 +68,11 @@ export const deleteCategory = createAsyncThunk(
   async ({ categoryId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${BASE_URL}/admin/category/${categoryId}`,
-        {
-          withCredentials: true,
-        }
+        `${BASE_URL}/admin/category/${categoryId}`
       );
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
       );

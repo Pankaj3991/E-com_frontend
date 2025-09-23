@@ -1,28 +1,36 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = "https://ecom-backend-1-0mwh.onrender.com/api/v1";
 
 const initialState = {
   data: [],
-  isLoading:false,
+  isLoading: false,
   error: null,
 };
 
 export const getAllProducts = createAsyncThunk(
   "/getAllProducts",
   async (
-    { page=1, search="", category="", minPrice=0, maxPrice=100000, role=''},
+    {
+      page = 1,
+      search = "",
+      category = "",
+      minPrice = 0,
+      maxPrice = 100000,
+      role = "",
+    },
     { rejectWithValue }
   ) => {
     try {
       const response = await axios.get(
         `${BASE_URL}/product?page=${page}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&supplier=${role}`,
-        { 
-          headers: {"Content-Type": "application/x-www-form-urlencoded"},
-          withCredentials: true }
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        }
       );
+      console.log(response);
       return response.data;
-    } catch (error) { 
+    } catch (error) {
       console.log(error);
       return rejectWithValue(
         error.response ? error.response.data.message : error.message
@@ -30,68 +38,91 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
-export const createProduct = createAsyncThunk("/createProduct", async ({formData},{rejectWithValue})=>{
-  try {
-    const response = await axios.post(`${BASE_URL}/product`, formData, {
-      headers: {"Content-Type": "multipart/form-data"},
-      withCredentials: true
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const createProduct = createAsyncThunk(
+  "/createProduct",
+  async ({ formData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/product`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
-export const updateProduct = createAsyncThunk("/updateProduct", async ({formData, productId},{rejectWithValue})=>{
-  try {
-    const response = await axios.put(`${BASE_URL}/product/${productId}`, formData, {
-      headers: {"Content-Type": "multipart/form-data"},
-      withCredentials: true
-    });
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const updateProduct = createAsyncThunk(
+  "/updateProduct",
+  async ({ formData, productId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/product/${productId}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
-export const productDetail = createAsyncThunk("/productDetail", async ({productId},{rejectWithValue})=>{
-  try {
-    const response = await axios.get(`${BASE_URL}/product/${productId}`, {
-      withCredentials: true
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const productDetail = createAsyncThunk(
+  "/productDetail",
+  async ({ productId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/product/${productId}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
-export const deleteProduct = createAsyncThunk("/deleteProduct", async ({productId},{rejectWithValue})=>{
-  try {
-    const response = await axios.delete(`${BASE_URL}/product/${productId}`, {
-      withCredentials: true
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const deleteProduct = createAsyncThunk(
+  "/deleteProduct",
+  async ({ productId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/product/${productId}`,
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
-export const supplierProduct = createAsyncThunk("/supplierProduct", async (_, {rejectWithValue})=>{
-  try {
-    const response = await axios.get(`${BASE_URL}/supplier/product`, {
-      withCredentials: true
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return rejectWithValue(error.response ? error.response.data.message : error.message);
+export const supplierProduct = createAsyncThunk(
+  "/supplierProduct",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/supplier/product`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(
+        error.response ? error.response.data.message : error.message
+      );
+    }
   }
-});
+);
 
 const productSlice = createSlice({
   name: "product",
@@ -116,7 +147,7 @@ const productSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-      
+
     builder
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
@@ -164,7 +195,6 @@ const productSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-
   },
 });
 
