@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   data: [],
@@ -14,7 +15,7 @@ export const getAllCategories = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.get("/api/v1/admin/category", {
+      const response = await axios.get(`${BASE_URL}/admin/category`, {
         withCredentials: true,
       });
       return response.data;
@@ -34,7 +35,7 @@ export const createCategory = createAsyncThunk(
     console.log(categoryData);
     try {
       const response = await axios.post(
-        "/api/v1/admin/category",
+        `${BASE_URL}/admin/category`,
         categoryData,
         {
           headers: { "Content-Type": "application/json" },
@@ -55,7 +56,7 @@ export const categoryDetail = createAsyncThunk(
   "/categoryDetail",
   async ({ categoryId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/v1/admin/category/${categoryId}`, {
+      const response = await axios.get(`${BASE_URL}/admin/category/${categoryId}`, {
         withCredentials: true,
       });
       return response.data;
@@ -73,7 +74,7 @@ export const deleteCategory = createAsyncThunk(
   async ({ categoryId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `/api/v1/admin/category/${categoryId}`,
+        `${BASE_URL}/admin/category/${categoryId}`,
         {
           withCredentials: true,
         }

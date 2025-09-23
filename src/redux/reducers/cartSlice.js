@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 const initialState = {
   data: [],
@@ -11,7 +13,7 @@ export const addItem = createAsyncThunk(
   "/addItem",
   async ({ productData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put("/api/v1/cart/addItem", productData, {
+      const response = await axios.put(`${BASE_URL}/cart/addItem`, productData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -29,7 +31,7 @@ export const removeItem = createAsyncThunk(
   "/removeItem",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/api/v1/cart/removeItem/${productId}`, {
+      const response = await axios.put(`${BASE_URL}/cart/removeItem/${productId}`, {
         withCredentials: true,
       });
       return response.data;
@@ -46,7 +48,7 @@ export const cartDetail = createAsyncThunk(
   "/cartDetail",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/api/v1/cart', {
+      const response = await axios.get(`${BASE_URL}/cart`, {
         withCredentials: true,
       });
       return response.data;

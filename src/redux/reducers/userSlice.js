@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   currentuser:{},
@@ -12,7 +13,7 @@ export const RegisterUser = createAsyncThunk(
   "/register",
   async (formDatas, {rejectWithValue}) => {
     try {
-      const response = await axios.post("/api/v1/register", formDatas, {
+      const response = await axios.post(`${BASE_URL}/register`, formDatas, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
@@ -28,7 +29,7 @@ export const LoginUser = createAsyncThunk(
   "/login",
   async (loginData, {rejectWithValue}) => {
     try {
-      const response = await axios.post("/api/v1/login", loginData, {
+      const response = await axios.post(`${BASE_URL}/login`, loginData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,7 +45,7 @@ export const LoginUser = createAsyncThunk(
 
 export const Logout = createAsyncThunk("/logout", async (_, {rejectWithValue}) => {
   try {
-    const response = await axios.get("/api/v1/logout", {
+    const response = await axios.get(`${BASE_URL}/logout`, {
       withCredentials: true,
     });
     return response.data;
@@ -58,7 +59,7 @@ export const currentUser = createAsyncThunk(
   "/currentUser",
   async (_, {rejectWithValue}) => {
     try {
-      const response = await axios.get("/api/v1/me", { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/me`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.log(error)
@@ -72,7 +73,7 @@ export const updatePassword = createAsyncThunk(
   async (passwordData,{rejectWithValue}) => {
     try {
       const response = await axios.put(
-        "/api/v1/password/update",
+        `${BASE_URL}/password/update`,
         passwordData,
         {
           headers: {
@@ -93,7 +94,7 @@ export const updateProfile = createAsyncThunk(
   "/updateProfile",
   async ({formData}, {rejectWithValue}) => {
     try {
-      const response = await axios.put("/api/v1/me/update", formData, {
+      const response = await axios.put(`${BASE_URL}/me/update`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -109,7 +110,7 @@ export const updateProfile = createAsyncThunk(
 
 export const allUsers = createAsyncThunk("/allUsers", async ({setusers}, {rejectWithValue}) => {
   try {
-    const response = await axios.get("/api/v1/admin/users", {
+    const response = await axios.get(`${BASE_URL}/admin/users`, {
       withCredentials: true,
     });
     setusers(response.data.users);
@@ -124,7 +125,7 @@ export const singleUser = createAsyncThunk(
   "/singleUser",
   async (userId,{rejectWithValue}) => {
     try {
-      const response = await axios.get(`/api/v1/admin/user/${userId}`, {
+      const response = await axios.get(`${BASE_URL}/admin/user/${userId}`, {
         withCredentials: true,
       });
       return response.data;
@@ -141,7 +142,7 @@ export const updateRole = createAsyncThunk(
   async ({ newRole, userId },{rejectWithValue}) => {
     try {
       const response = await axios.put(
-        `/api/v1/admin/user/${userId}`,
+        `${BASE_URL}/admin/user/${userId}`,
         {role:newRole},
         {
           headers: {
@@ -162,7 +163,7 @@ export const deleteUser = createAsyncThunk(
   "/deleteUser",
   async ({userId}, {rejectWithValue}) => {
     try {
-      const response = await axios.delete(`/api/v1/admin/user/${userId}`, {
+      const response = await axios.delete(`${BASE_URL}/admin/user/${userId}`, {
         withCredentials: true,
       });
       return response.data;

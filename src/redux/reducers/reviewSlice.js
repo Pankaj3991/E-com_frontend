@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   data: [],
@@ -12,7 +13,7 @@ export const getAllReviews = createAsyncThunk(
   "/getAllReviews",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/v1/review/${productId}`, {
+      const response = await axios.get(`${BASE_URL}/review/${productId}`, {
         withCredentials: true,
       });
       return response.data;
@@ -30,7 +31,7 @@ export const createReview = createAsyncThunk(
   "/createReview",
   async ({ reviewData }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/v1/review", reviewData, {
+      const response = await axios.post("${BASE_URL}/review", reviewData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -49,7 +50,7 @@ export const deleteReview = createAsyncThunk(
   "deleteReview",
   async ({ reviewId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/api/v1/review/${reviewId}`, {
+      const response = await axios.delete(`${BASE_URL}/review/${reviewId}`, {
         withCredentials: true,
       });
       return response.data;

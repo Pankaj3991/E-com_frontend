@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const initialState = {
   data: [],
   isLoading: false,
@@ -11,7 +13,7 @@ export const placeOrder = createAsyncThunk(
   async ({ orderItem, shippingInfo }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "/api/v1/order/placeOrder",
+        `${BASE_URL}/order/placeOrder`,
         { orderItem, shippingInfo },
         {
           headers: { "Content-Type": "application/json" },
@@ -33,7 +35,7 @@ export const cancelOrder = createAsyncThunk(
   async ({ orderId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `/api/v1/order/cancelOrder/${orderId}`,
+        `${BASE_URL}order/cancelOrder/${orderId}`,
         {
           withCredentials: true,
         }
@@ -53,7 +55,7 @@ export const updateStatus = createAsyncThunk(
   async ({ orderId, orderStatus }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `/api/v1/order/updateStatus/${orderId}`,
+        `${BASE_URL}/order/updateStatus/${orderId}`,
         { orderStatus },
         {
           headers: { "Content-Type": "application/json" },
@@ -74,7 +76,7 @@ export const getOrders = createAsyncThunk(
   "/order/getOrders",
   async ( _, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/order/getOrders", {
+      const response = await axios.get(`${BASE_URL}/order/getOrders`, {
         withCredentials: true,
       });
       return response.data;
@@ -91,7 +93,7 @@ export const supplierOrders = createAsyncThunk(
   "/order/supplierOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/order/supplierOrders", {
+      const response = await axios.get(`${BASE_URL}/order/supplierOrders`, {
         withCredentials: true,
       });
       return response.data;

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   data: [],
@@ -15,7 +16,7 @@ export const getAllProducts = createAsyncThunk(
   ) => {
     try {
       const response = await axios.get(
-        `/api/v1/product?page=${page}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&supplier=${role}`,
+        `${BASE_URL}/product?page=${page}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&supplier=${role}`,
         { 
           headers: {"Content-Type": "application/x-www-form-urlencoded"},
           withCredentials: true }
@@ -31,7 +32,7 @@ export const getAllProducts = createAsyncThunk(
 );
 export const createProduct = createAsyncThunk("/createProduct", async ({formData},{rejectWithValue})=>{
   try {
-    const response = await axios.post('/api/v1/product', formData, {
+    const response = await axios.post(`${BASE_URL}/product`, formData, {
       headers: {"Content-Type": "multipart/form-data"},
       withCredentials: true
     });
@@ -44,7 +45,7 @@ export const createProduct = createAsyncThunk("/createProduct", async ({formData
 
 export const updateProduct = createAsyncThunk("/updateProduct", async ({formData, productId},{rejectWithValue})=>{
   try {
-    const response = await axios.put(`/api/v1/product/${productId}`, formData, {
+    const response = await axios.put(`${BASE_URL}/product/${productId}`, formData, {
       headers: {"Content-Type": "multipart/form-data"},
       withCredentials: true
     });
@@ -58,7 +59,7 @@ export const updateProduct = createAsyncThunk("/updateProduct", async ({formData
 
 export const productDetail = createAsyncThunk("/productDetail", async ({productId},{rejectWithValue})=>{
   try {
-    const response = await axios.get(`/api/v1/product/${productId}`, {
+    const response = await axios.get(`${BASE_URL}/product/${productId}`, {
       withCredentials: true
     });
     return response.data;
@@ -70,7 +71,7 @@ export const productDetail = createAsyncThunk("/productDetail", async ({productI
 
 export const deleteProduct = createAsyncThunk("/deleteProduct", async ({productId},{rejectWithValue})=>{
   try {
-    const response = await axios.delete(`/api/v1/product/${productId}`, {
+    const response = await axios.delete(`${BASE_URL}/product/${productId}`, {
       withCredentials: true
     });
     return response.data;
@@ -82,7 +83,7 @@ export const deleteProduct = createAsyncThunk("/deleteProduct", async ({productI
 
 export const supplierProduct = createAsyncThunk("/supplierProduct", async (_, {rejectWithValue})=>{
   try {
-    const response = await axios.get(`/api/v1/supplier/product`, {
+    const response = await axios.get(`${BASE_URL}/supplier/product`, {
       withCredentials: true
     });
     return response.data;
