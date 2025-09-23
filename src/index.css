@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Basic CSS Reset */
+div {
+    @apply box-border;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* Allow percentage-based heights on the html/body */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* Improves font rendering */
+    -moz-osx-font-smoothing: grayscale;
+    /* Improves font rendering */
+    overflow-x: hidden;
+}
+
+/* Remove underline from links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Ensure responsive images */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Ensure responsive iframes and videos */
+iframe,
+video {
+    max-width: 100%;
+    display: block;
+}
+
+/* Box-sizing fix */
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
