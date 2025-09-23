@@ -20,7 +20,6 @@ import PageNotFound from "./pages/PageNotFound.jsx";
 import ProtectedRoute from "./utils/protectedRoute.jsx";
 import AdminRoute from "./utils/AdminRoute.jsx";
 import SupplierAdmin from "./utils/SupplierAdmin.jsx";
-ProtectedRoute;
 const App = () => {
   return (
     <BrowserRouter>
