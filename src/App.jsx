@@ -17,7 +17,7 @@ import ProductDetail from "./pages/ProductDetail.jsx";
 import SearchProduct from "./pages/SearchProduct.jsx";
 import CategoryFilter from "./pages/CategoryFilter.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
-import ProtectedRoute from "./utils/protectedRoute.jsx";
+import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import AdminRoute from "./utils/AdminRoute.jsx";
 import SupplierAdmin from "./utils/SupplierAdmin.jsx";
 const App = () => {
