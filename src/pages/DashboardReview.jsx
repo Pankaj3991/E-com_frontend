@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardSidebar from "../components/DashboardSidebar";
-import StarRatingComponent from "react-star-rating-component";
+import ReactStars from "react-rating-stars-component"; // ✅ new library
 import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../redux/reducers/reviewSlice";
 import { errorMessage } from "../helperFunction";
@@ -11,6 +11,7 @@ const DashboardReview = () => {
   const { data, isLoading, error } = useSelector((state) => state.review);
   const [productId, setproductId] = useState("");
   const [reviews, setreviews] = useState([]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await dispatch(getAllReviews({ productId }));
@@ -20,8 +21,11 @@ const DashboardReview = () => {
       errorMessage(response.payload);
     }
   };
+
   if (isLoading) return <Loader />;
-  if (error){console.log(error)}
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <div className="box-border min-h-[50vh] w-[100vw] bg-grayColor flex flex-col lg:flex-row mt-[7vh]">
@@ -46,20 +50,28 @@ const DashboardReview = () => {
         </form>
 
         {reviews?.map((review) => (
-          <div key={review._id} className="p-2 border border-textAndBorder rounded-lg my-2">
+          <div
+            key={review._id}
+            className="p-2 border border-textAndBorder rounded-lg my-2"
+          >
             <div className="flex justify-between">
-              <div className=""><i className="fa-solid fa-user"></i> {review.user.name}</div>
               <div className="">
-                <StarRatingComponent
-                  name={review.user.name} // Name of the rating component (required)
-                  starCount={5} // Number of stars
-                  value={review.rating} // Initial rating value
-                  starColor="red" // Color of the stars
-                  emptyStarColor="#333" // Color of empty stars
+                <i className="fa-solid fa-user"></i> {review.user.name}
+              </div>
+              <div className="">
+                <ReactStars
+                  count={5} // number of stars
+                  value={review.rating} // rating value
+                  size={20} // star size
+                  activeColor="red" // color of filled stars
+                  color="#333" // color of empty stars
+                  edit={false} // make it read-only
                 />
               </div>
             </div>
-            <div className="mt-2"><i className="fa-regular fa-comment-dots"></i> {review.comment}</div>
+            <div className="mt-2">
+              <i className="fa-regular fa-comment-dots"></i> {review.comment}
+            </div>
           </div>
         ))}
       </div>
