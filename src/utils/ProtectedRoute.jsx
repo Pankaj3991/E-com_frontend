@@ -14,7 +14,12 @@ const ProtectedRoute = () => {
   useEffect(() => {
     const getUser = async () => {
       const response = await dispatch(currentUser());
-      setUser(response.payload.user); // no need for await
+      if (response.payload?.user) {
+        setUser(response.payload.user);
+      } else {
+        setUser(null);
+        console.log("user not found from userSlice")
+      }
       setLoading(false);
     };
     getUser();
