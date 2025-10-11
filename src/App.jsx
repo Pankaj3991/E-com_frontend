@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home.jsx";
-import Auth from "./pages/Auth";
+import Auth from "./pages/Auth.jsx";
 import Profile from "./pages/Profile.jsx";
 import DashboardProduct from "./pages/DashboardProduct.jsx";
 import DashboardCategory from "./pages/DashboardCategory.jsx";
