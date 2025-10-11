@@ -3,13 +3,13 @@ import {
   RegisterUser,
   LoginUser,
   clearError,
-} from "../redux/reducers/userSlice";
+} from "../redux/reducers/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {successMessage, errorMessage} from '../helperFunction.js'
-import Loader from "../components/Loader";
+import Loader from "../components/Loader.jsx";
 
-const auth = () => {
+const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -202,4 +202,4 @@ const auth = () => {
   );
 };
 
-export default auth;
+export default Auth;

@@ -34,6 +34,7 @@ export const LoginUser = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials:true
       });
       return response.data;
     } catch (error) {
