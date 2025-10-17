@@ -15,6 +15,7 @@ export const RegisterUser = createAsyncThunk(
     try {
       const response = await axios.post(`${BASE_URL}/register`, formDatas, {
         headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true
       });
       return response.data;
     } catch (error) {
@@ -50,7 +51,7 @@ export const Logout = createAsyncThunk(
   "/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/logout`);
+      const response = await axios.get(`${BASE_URL}/logout`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -87,6 +88,7 @@ export const updatePassword = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials:true
         }
       );
       return response.data;
@@ -107,6 +109,7 @@ export const updateProfile = createAsyncThunk(
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials:true
       });
       return response.data;
     } catch (error) {
@@ -122,7 +125,7 @@ export const allUsers = createAsyncThunk(
   "/allUsers",
   async ({ setusers }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/users`);
+      const response = await axios.get(`${BASE_URL}/admin/users`,{withCredentials:true});
       setusers(response.data.users);
       return response.data;
     } catch (error) {
@@ -138,7 +141,7 @@ export const singleUser = createAsyncThunk(
   "/singleUser",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/user/${userId}`);
+      const response = await axios.get(`${BASE_URL}/admin/user/${userId}`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -160,6 +163,7 @@ export const updateRole = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials:true
         }
       );
       return response.data;
@@ -176,7 +180,7 @@ export const deleteUser = createAsyncThunk(
   "/deleteUser",
   async ({ userId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/admin/user/${userId}`);
+      const response = await axios.delete(`${BASE_URL}/admin/user/${userId}`, {withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);

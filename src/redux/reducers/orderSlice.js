@@ -17,6 +17,7 @@ export const placeOrder = createAsyncThunk(
         { orderItem, shippingInfo },
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials:true,
         }
       );
       return response.data;
@@ -34,7 +35,7 @@ export const cancelOrder = createAsyncThunk(
   async ({ orderId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${BASE_URL}order/cancelOrder/${orderId}`
+        `${BASE_URL}order/cancelOrder/${orderId}`, {withCredentials:true}
       );
       return response.data;
     } catch (error) {
@@ -55,6 +56,7 @@ export const updateStatus = createAsyncThunk(
         { orderStatus },
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials:true
         }
       );
       return response.data;
@@ -71,7 +73,7 @@ export const getOrders = createAsyncThunk(
   "/order/getOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/order/getOrders`);
+      const response = await axios.get(`${BASE_URL}/order/getOrders`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -86,7 +88,7 @@ export const supplierOrders = createAsyncThunk(
   "/order/supplierOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/order/supplierOrders`);
+      const response = await axios.get(`${BASE_URL}/order/supplierOrders`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);

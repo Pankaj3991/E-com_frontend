@@ -13,7 +13,7 @@ export const getAllReviews = createAsyncThunk(
   "/getAllReviews",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/review/${productId}`);
+      const response = await axios.get(`${BASE_URL}/review/${productId}`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -31,6 +31,7 @@ export const createReview = createAsyncThunk(
     try {
       const response = await axios.post("${BASE_URL}/review", reviewData, {
         headers: { "Content-Type": "application/json" },
+        withCredentials:true,
       });
       console.log(response);
       return response.data;
@@ -47,7 +48,7 @@ export const deleteReview = createAsyncThunk(
   "deleteReview",
   async ({ reviewId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/review/${reviewId}`);
+      const response = await axios.delete(`${BASE_URL}/review/${reviewId}`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);

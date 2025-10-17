@@ -12,7 +12,7 @@ export const getAllCategories = createAsyncThunk(
   "/getAllCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/admin/category`);
+      const response = await axios.get(`${BASE_URL}/admin/category`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -34,6 +34,7 @@ export const createCategory = createAsyncThunk(
         categoryData,
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials:true
         }
       );
       return response.data;
@@ -51,7 +52,7 @@ export const categoryDetail = createAsyncThunk(
   async ({ categoryId }, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/admin/category/${categoryId}`
+        `${BASE_URL}/admin/category/${categoryId}`, {withCredentials:true}
       );
       return response.data;
     } catch (error) {
@@ -68,7 +69,7 @@ export const deleteCategory = createAsyncThunk(
   async ({ categoryId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${BASE_URL}/admin/category/${categoryId}`
+        `${BASE_URL}/admin/category/${categoryId}`,{withCredentials:true}
       );
       return response.data;
     } catch (error) {

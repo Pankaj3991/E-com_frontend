@@ -26,6 +26,7 @@ export const getAllProducts = createAsyncThunk(
         `${BASE_URL}/product?page=${page}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category}&supplier=${role}`,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          withCredentials:true
         }
       );
       console.log(response);
@@ -44,6 +45,7 @@ export const createProduct = createAsyncThunk(
     try {
       const response = await axios.post(`${BASE_URL}/product`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
+        withCredentials:true,
       });
       return response.data;
     } catch (error) {
@@ -64,7 +66,8 @@ export const updateProduct = createAsyncThunk(
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-        }
+          withCredentials:true,
+        },
       );
       console.log(response.data);
       return response.data;
@@ -81,7 +84,7 @@ export const productDetail = createAsyncThunk(
   "/productDetail",
   async ({ productId }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/product/${productId}`);
+      const response = await axios.get(`${BASE_URL}/product/${productId}`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
@@ -97,7 +100,7 @@ export const deleteProduct = createAsyncThunk(
   async ({ productId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${BASE_URL}/product/${productId}`,
+        `${BASE_URL}/product/${productId}`,{withCredentials:true,}
       );
       return response.data;
     } catch (error) {
@@ -113,7 +116,7 @@ export const supplierProduct = createAsyncThunk(
   "/supplierProduct",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/supplier/product`);
+      const response = await axios.get(`${BASE_URL}/supplier/product`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);

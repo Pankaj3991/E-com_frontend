@@ -17,6 +17,7 @@ export const addItem = createAsyncThunk(
         productData,
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials:true
         }
       );
       return response.data;
@@ -34,7 +35,7 @@ export const removeItem = createAsyncThunk(
   async ({ productId }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${BASE_URL}/cart/removeItem/${productId}`
+        `${BASE_URL}/cart/removeItem/${productId}`,{},{withCredentials:true}
       );
       return response.data;
     } catch (error) {
@@ -50,7 +51,7 @@ export const cartDetail = createAsyncThunk(
   "/cartDetail",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/cart`);
+      const response = await axios.get(`${BASE_URL}/cart`,{withCredentials:true});
       return response.data;
     } catch (error) {
       console.log(error);
