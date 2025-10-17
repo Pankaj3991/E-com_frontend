@@ -65,7 +65,7 @@ export const currentUser = createAsyncThunk(
   "/currentUser",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/me`);
+      const response = await axios.get(`${BASE_URL}/me`,{withCredentials:true,});
       return response.data;
     } catch (error) {
       console.log(error);
